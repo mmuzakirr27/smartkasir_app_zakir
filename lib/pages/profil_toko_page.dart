@@ -19,6 +19,7 @@ class _ProfilTokoPageState extends State<ProfilTokoPage> {
   final _alamatController = TextEditingController();
   final _noWaController = TextEditingController();
   final _footerController = TextEditingController();
+  final _igTokoController = TextEditingController(); // DIUBAH: Controller baru akun Instagram toko
 
   // Status visual tombol simpan
   bool _sedangMenyimpan = false;
@@ -38,6 +39,7 @@ class _ProfilTokoPageState extends State<ProfilTokoPage> {
     _alamatController.dispose();
     _noWaController.dispose();
     _footerController.dispose();
+    _igTokoController.dispose(); // DIUBAH: Membersihkan memori controller Instagram
     super.dispose();
   }
 
@@ -49,6 +51,7 @@ class _ProfilTokoPageState extends State<ProfilTokoPage> {
       _alamatController.text = prefs.getString('alamat_toko') ?? 'Jl. Brigjend H. Hasan Basry, Banjarmasin';
       _noWaController.text = prefs.getString('no_wa') ?? '081234567890';
       _footerController.text = prefs.getString('footer_struk') ?? 'Terima Kasih Atas Kunjungan Anda! Barang yang sudah dibeli tidak dapat ditukar.';
+      _igTokoController.text = prefs.getString('ig_toko') ?? '@smartkasir.poliban'; // DIUBAH: Memuat key 'ig_toko'
       _activeCashierName = prefs.getString('active_cashier_name') ?? 'Belum Ditentukan';
     });
   }
@@ -62,13 +65,14 @@ class _ProfilTokoPageState extends State<ProfilTokoPage> {
     await prefs.setString('alamat_toko', _alamatController.text.trim());
     await prefs.setString('no_wa', _noWaController.text.trim());
     await prefs.setString('footer_struk', _footerController.text.trim());
+    await prefs.setString('ig_toko', _igTokoController.text.trim()); // DIUBAH: Menyimpan key 'ig_toko'
 
     setState(() => _sedangMenyimpan = false);
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('Identitas toko berhasil diperbarui!'),
+        content: const Text('Identitas toko & Instagram berhasil diperbarui!'),
         backgroundColor: Colors.green.shade700,
         behavior: SnackBarBehavior.floating,
       ),
@@ -172,6 +176,20 @@ class _ProfilTokoPageState extends State<ProfilTokoPage> {
               decoration: InputDecoration(
                 labelText: 'Nomor WhatsApp / Kontak Toko',
                 prefixIcon: const Icon(Icons.phone_outlined),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 14),
+
+            // 3.5. AKUN INSTAGRAM TOKO (DIUBAH: Tambahan Input Instagram Baru)
+            TextFormField(
+              controller: _igTokoController,
+              decoration: InputDecoration(
+                labelText: 'Akun Instagram Toko (@nama_toko)',
+                hintText: 'Contoh: @nelasasirangan',
+                prefixIcon: const Icon(Icons.camera_alt_outlined),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 filled: true,
                 fillColor: Colors.white,

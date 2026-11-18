@@ -113,13 +113,16 @@ class _KelolaKaryawanPageState extends State<KelolaKaryawanPage> {
     );
   }
 
-  // Helper pembuat badge peran dengan warna berbeda
+  // Helper pembuat badge peran dengan warna berbeda (DIUBAH: Tambahan Supervisor Badge Ungu)
   Widget _buildRoleBadge(String peran) {
     Color bg;
     Color fg;
     if (peran == 'Manajer') {
       bg = Colors.amber.shade100;
       fg = Colors.amber.shade900;
+    } else if (peran == 'Supervisor') { // DIUBAH: Aturan warna latar ungu muda & teks ungu tua
+      bg = Colors.purple.shade100;
+      fg = Colors.purple.shade900;
     } else if (peran == 'Admin') {
       bg = Colors.blue.shade100;
       fg = Colors.blue.shade900;
@@ -251,7 +254,7 @@ class _KelolaKaryawanPageState extends State<KelolaKaryawanPage> {
                         ),
                         subtitle: Padding(
                           padding: const EdgeInsets.only(top: 4),
-                          child: Text('PIN: **** | ID: #${staf.id}', style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
+                          child: Text('PIN: ****** | ID: #${staf.id}', style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
                         ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
